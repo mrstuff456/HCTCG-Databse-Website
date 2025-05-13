@@ -1,0 +1,16 @@
+@import url('https://fonts.google.com/specimen/IBM+Plex+Sans+Condensed');
+@import url('https://fonts.google.com/specimen/IBM+Plex+Sans');
+
+p {
+    font-family: "IBM Plex Sans Condensed";
+    text-align: right;
+    font-weight: normal;
+
+}
+
+.header {
+    position: sticky;
+    background-color: white;
+    font-family: 'IBM Plex Sans Condensed';
+    font-weight: bold;
+}
