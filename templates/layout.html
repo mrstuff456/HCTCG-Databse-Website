@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/{{stylesheet}}">
+    <link rel="shortcut icon" href="/static/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
 </head>
 <body>
-    <header></header>
-    <nav></nav>
+    <!-- Header for the page, Customizable via the python code-->
+    <header>
+        <div class="header-container">    
+            <div class="title">
+                {{Header}}
+            </div>
+            <div class="searchbar">
+                <form action="/search">
+                    <input type="text" id="searchbar">
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <div class="navbar">
+            <a href="/"><img class="navbarimg" src="/static/images/hermitcrafttcglogo.jpg" alt="HCTCG Logo"></a>
+            <div class="navbarbuttons">
+                <a href="/">Home</a><br>
+                <a href="/search/CardType/Hermit">Hermits</a><br>
+                <a href="/search/CardType/Effect">Effects</a><br>
+                <a href="/rules">Rulebook</a><br>
+                <a href="/changes">Changes</a><br>
+                <a href="/about">About</a><br>
+            </div>
+        </div>
+    </nav>
     <main>{%block content%}{%endblock%}</main>
     <footer></footer>
 </body>

@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap');
+
+p {
+    font-family: "IBM Plex Sans Condensed";
+    text-align: left;
+    font-weight: normal;
+
+}
+
+.header-container {
+    padding-left: 15vw;
+    display: grid;
+    grid-template-columns: 45vw 40vw;
+    position: fixed;
+    font-family: 'IBM Plex Sans';
+    grid-template-areas: "title search";
+}
+
+.title {
+    font-weight: bold;
+    font-size: 2.5vw;
+    grid-area: title;
+    background-color: white;
+}
+.searchbar {
+    text-align: right;
+    padding-top: 1.5%;
+    padding-right: 4%;
+    grid-area: search;
+    background-color: white;
+    
+}
+.navbar {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 15vw;
+    grid-template-rows: auto;
+    grid-template-areas:
+    "image"
+    "buttons";
+    background-color: #010304;
+}
+.navbarimg {
+    padding-left: 1vw;
+    padding-top: 0.5vh;
+    width: 13vw;
+    height: 10vw;
+    grid-area: image;
+}
+.navbarbuttons a {
+    color: white;
+    text-decoration: none;
+    font-family: "IBM Plex Sans Condensed";
+    font-size: 3vw;
+    padding-left: 1vW;
+}
+.navbarbuttons a:hover {
+    text-decoration: underline;
+}

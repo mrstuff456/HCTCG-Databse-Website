@@ -1,6 +1,13 @@
 {%extends "layout.html"%}
 {%block content%}
-<p>{{HeadStats}}
-{{HermitStats}}
-{{SeeAlso}}</p>
+<div class="SeeAlso">
+    {%for card in SeeAlso%}
+    <a href="/card/hermit/{{card[1]}}/{{card[2]}}">{{card[1]}} {{card[2]}},</a>
+    {%endfor%}
+</div>
+<img src="/static/images/hermitcrafttcglogo.jpg" alt="Hermitcraft TCG Logo" class="ArtImage">
+<div class="Stats">
+    <h2>Stats:</h2>
+    <p>Health: {{HermitStats[0][4]}}</p>
+</div>
 {%endblock%}

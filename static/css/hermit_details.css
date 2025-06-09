@@ -1,0 +1,24 @@
+main {
+    padding-top: 3.4vw;
+    padding-left: 16vw;
+    background-color: #efefef;
+    font-family: "IBM Plex Sans Condensed";
+    display: grid;
+    grid-template-areas: 
+    'Seealso Seealso Seealso'
+    'Image Stats Attacks';
+    grid-template-columns: 15vw 25vw 25vw;
+}
+.SeeAlso {
+    grid-area: "Seealso";
+    font-size: 1.05vw;
+}
+.ArtImage{
+    grid-area: "Image";
+    padding-left: 1vw;
+    width: 17vw;
+    height: 17vw;
+}
+.Stats {
+    grid-area: "Stats";
+}
