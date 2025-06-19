@@ -1,24 +1,54 @@
 main {
-    padding-top: 3.4vw;
+    padding-top: 3.5vw;
     padding-left: 16vw;
     background-color: #efefef;
     font-family: "IBM Plex Sans Condensed";
     display: grid;
     grid-template-areas: 
-    'Seealso Seealso Seealso'
-    'Image Stats Attacks';
-    grid-template-columns: 15vw 25vw 25vw;
+    'seealso'
+    'image stats attacks';
+    grid-template-columns: 32vw 24vw 28vw;
+    scroll-margin-top: 3.5vw;
 }
 .SeeAlso {
     grid-area: "Seealso";
     font-size: 1.05vw;
+    grid-column-start: 1;
+    grid-column-end: 4;
 }
 .ArtImage{
-    grid-area: "Image";
-    padding-left: 1vw;
-    width: 17vw;
-    height: 17vw;
+    grid-area: "image";
+    padding-left: 3vw;
+    padding-top: 1vw;
+    width: 20vw;
+    height: 20vw;
 }
 .Stats {
-    grid-area: "Stats";
+    grid-area: "stats";
+    text-wrap: "wrap";
+    background-color: #37A8AC;
+    padding: 0% 0.5vw;
+    border-style: solid;
+    border-color: #37A8AC;
+    border-radius: 10%;
+    margin-right: 8vw;
+}
+.Attacks {
+    grid-area: "attacks";
+    text-wrap: wrap;
+    margin-right: 9vw;
+    background-color: #75A16F;
+    padding: 0% 0.5vw;
+    border-style: solid;
+    border-color: #75A16F;
+    border-radius: 10%;
+}
+.AttackTitle {
+    font-weight: bold;
+    padding-bottom: 0.2vw;
+}
+.AttackText {
+    font-style: italic;
+    padding-bottom:0.5vw;
+    padding-top: 0.3vw;
 }

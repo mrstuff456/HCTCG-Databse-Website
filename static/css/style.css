@@ -15,21 +15,24 @@ p {
     position: fixed;
     font-family: 'IBM Plex Sans';
     grid-template-areas: "title search";
+    background-color: white;
+}
+
+body {
+    margin: 0px;
 }
 
 .title {
     font-weight: bold;
     font-size: 2.5vw;
     grid-area: title;
-    background-color: white;
+    padding-left: 1vw;
 }
 .searchbar {
     text-align: right;
     padding-top: 1.5%;
     padding-right: 4%;
-    grid-area: search;
-    background-color: white;
-    
+    grid-area: search;    
 }
 .navbar {
     position: fixed;
@@ -40,6 +43,7 @@ p {
     "image"
     "buttons";
     background-color: #010304;
+    padding-bottom: 100vh;
 }
 .navbarimg {
     padding-left: 1vw;

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
 </head>
+
 <body>
     <!-- Header for the page, Customizable via the python code-->
     <header>
@@ -23,6 +24,7 @@
             </div>
         </div>
     </header>
+
     <nav>
         <div class="navbar">
             <a href="/"><img class="navbarimg" src="/static/images/hermitcrafttcglogo.jpg" alt="HCTCG Logo"></a>
@@ -36,7 +38,13 @@
             </div>
         </div>
     </nav>
-    <main>{%block content%}{%endblock%}</main>
-    <footer></footer>
+
+    <main>
+        {%block content%}{%endblock%}
+    </main>
+
+    <footer>
+
+    </footer>
 </body>
 </html> 

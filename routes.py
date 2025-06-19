@@ -9,33 +9,15 @@ app.logger.setLevel(logging.DEBUG)
 
 
 
-def removepluses(item):
-    #Ah yes Perry, you are just in time to witness my latest invention, the DEPLUS-INATOR!!!!!
+@app.route('/') #Home page
+def home():
 
-    rebuild = "" #Initialise DEPLUS-INATOR
+    #PAGE STATICS
+    Header = "HCTCG Database"
+    Title = "Home - HCTCG Database"
+    Stylesheet = "hermit_details.css"
 
-    #REMOVE ALL PLUSES IN THE TRI-STATE AREA!!!
-    for i in item:
-        if i == '+':
-            i = ' '
-        rebuild += i
-    #GIVE THEM BACK THEIR PLUSLESS WORLD!!! MWAH HA HA!!!!
-    return rebuild
-
-
-def addpluses(item):
-    #Ah but there is MORE perry, here is the REPLUS-INATOR!!!
-
-    rebuild = "" #Initialise REPLUS-INATOR
-
-    #MAKE ALL SPACES PLUSES IN THE TRI-STATE AREA!!!
-    for i in item:
-        if i == ' ':
-            i = '+'
-        rebuild += i
-    #GIVE THEM BACK THEIR PLUSLESS WORLD!  MWAH HA HA!!!
-    return rebuild
-
+    return render_template('home.html', Header = Header, Title = Title, Stylesheet = Stylesheet)
 
 
 @app.route('/card/hermit/<name>/<rarity>') # Hermit stats page
@@ -48,24 +30,51 @@ def hermit_page(name, rarity):
     cur.execute(f"SELECT * FROM Card WHERE Name = '{name}' AND Rarity = '{rarity}';")
     HeadStats = cur.fetchall()
     id = HeadStats[0][0] #extract the id from the headstats
-    title = f"{HeadStats[0][1]} {HeadStats[0][2]} - Details"
 
     #query the database to get the "hermit" stats
     cur.execute(f"SELECT * FROM Hermit WHERE id = {id}")
     HermitStats = cur.fetchall()
+    #extract certain stats for later use
+    Health = int(HermitStats[0][3])
+    A1Damage = int(HermitStats[0][6])
+    A2Damage = int(HermitStats[0][10])
 
     #grab a list of cards that share the same "owner" as the selected card.
     cur.execute(f"SELECT ID, Name, Rarity FROM Card WHERE ID IN (SELECT ID FROM Hermit WHERE OwnerName='{HermitStats[0][2]}') AND NOT ID = {id};")
     SeeAlso = cur.fetchall()
 
+    #generate word versions of the attack cost
+    A1Worded = []
+    A2Worded = []
+    A1Cost = 0
+    A2Cost = 0
+    for i in HermitStats[0][4]:
+        if i == "X":
+            A1Worded.append(HermitStats[0][1]) # add the type of the hermit to the list
+            A1Cost += 5
+        else:
+            A1Worded.append("Any") #add "any" if not an X (a wild)
+            A1Cost += 4
 
-    #generate the Header of the page
+    for i in HermitStats[0][8]:
+        if i == "X":
+            A2Worded.append(HermitStats[0][1]) # add the type of the hermit to the list
+            A2Cost += 5
+        else:
+            A2Worded.append("Any") #add "any" if not an X (a wild)
+            A2Cost += 4
+
+    #Generate the Ratings of the cards
+    #Generate using the CAV method (Cost Accounted Value)
+    CAV = 9 * ((Health - 200 + A1Damage + A2Damage) / ((A1Cost + 10) * (A2Cost + 40))) + 0.1
+    CAV = round(CAV, 2)
+    
+    #PAGE STATICS
     Header = f"#{id} {HeadStats[0][1]} - {HeadStats[0][2]}"
-
-    #set the deddicated stylesheeet
+    title = f"{HeadStats[0][1]} {HeadStats[0][2]} - Details"
     stylesheet = "hermit_details.css"
 
-    return render_template('hermit_details.html', HeadStats = HeadStats, HermitStats = HermitStats, SeeAlso = SeeAlso, title = title, Header = Header, stylesheet=stylesheet)
+    return render_template('hermit_details.html', HeadStats = HeadStats, HermitStats = HermitStats, SeeAlso = SeeAlso, title = title, Header = Header, stylesheet=stylesheet, A1Worded = A1Worded, A2Worded = A2Worded, CAV = CAV)
 
 
 @app.route('/search')
