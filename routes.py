@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import logging
+import math
 
 
 app = Flask(__name__)
@@ -12,15 +13,15 @@ app.logger.setLevel(logging.DEBUG)
 @app.route('/') #Home page
 def home():
 
-    #PAGE STATICS
+   #PAGE STATICS
     Header = "HCTCG Database"
     Title = "Home - HCTCG Database"
-    Stylesheet = "hermit_details.css"
+    Stylesheet = "hermit_details.css" 
 
     return render_template('home.html', Header = Header, Title = Title, Stylesheet = Stylesheet)
 
 
-@app.route('/card/hermit/<name>/<rarity>') # Hermit stats page
+@app.route('/Card/Hermit/<name>/<rarity>') # Hermit stats page
 def hermit_page(name, rarity):
     #initialise sql and cursor
     conn =  sqlite3.connect('card.db')
@@ -69,6 +70,7 @@ def hermit_page(name, rarity):
     CAV = 9 * ((Health - 200 + A1Damage + A2Damage) / ((A1Cost + 10) * (A2Cost + 40))) + 0.1
     CAV = round(CAV, 2)
     
+    
     #PAGE STATICS
     Header = f"#{id} {HeadStats[0][1]} - {HeadStats[0][2]}"
     title = f"{HeadStats[0][1]} {HeadStats[0][2]} - Details"
@@ -76,10 +78,43 @@ def hermit_page(name, rarity):
 
     return render_template('hermit_details.html', HeadStats = HeadStats, HermitStats = HermitStats, SeeAlso = SeeAlso, title = title, Header = Header, stylesheet=stylesheet, A1Worded = A1Worded, A2Worded = A2Worded, CAV = CAV)
 
+@app.route('/Searchbar', methods =['POST'])
+def search_redirect():
+    search = request.form.get('query')
+    return  redirect(f"/Search/Name/{search}")
 
-@app.route('/search')
-def search():
-    return render_template('layout.html')
+@app.route('/Search/<string:category>/<string:query>')
+def search(category, query):
+    #initialise sql and cursor
+    conn =  sqlite3.connect('card.db')
+    cur = conn.cursor()
+
+    Header = ""
+
+    if category in["ID", "Rarity", "CardType", "Series"]:
+        cur.execute(f"SELECT Name, Rarity, Art, CardType FROM Card WHERE {category} = '{query}' ORDER BY Name ASC")
+        Cards = cur.fetchall()
+        Header = f"{query} Cards"
+    if category == "Name":
+        NameFormatted = "%"
+        for i in query:
+            NameFormatted += f"{i}%"
+        cur.execute(f"SELECT Name, Rarity, Art, CardType FROM Card WHERE Name LIKE '{NameFormatted}'")
+        Cards = cur.fetchall()
+        Header = f"Cards matching '{query}'"
+    if category in["Type", "OwnerName"]:
+        cur.execute(f"SELECT Name, Rarity, Art, CardType FROM Card WHERE ID IN(SELECT ID FROM Hermit WHERE {category} = '{query}')")
+        Cards = cur.fetchall()
+        if category == "OwnerName":
+            Header = f"{query}'s Cards"
+        else:
+            Header = f"{query} Cards"
+    
+
+    #PAGE STATICS
+    Title = "Card Search"
+    stylesheet = "search.css"
+    return render_template('search.html', Header = Header, Title = Title, stylesheet = stylesheet, Cards = Cards, category = category)
 
 
 @app.route('/beemovie') #thinking bee

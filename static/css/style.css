@@ -7,7 +7,13 @@ p {
     font-weight: normal;
 
 }
-
+main {
+    padding-top: 3.5vw;
+    padding-left: 16vw;
+    background-color: #efefef;
+    font-family: "IBM Plex Sans Condensed";
+    scroll-margin-top: 3.5vw;
+}
 .header-container {
     padding-left: 15vw;
     display: grid;

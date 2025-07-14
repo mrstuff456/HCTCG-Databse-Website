@@ -1,14 +1,9 @@
 main {
-    padding-top: 3.5vw;
-    padding-left: 16vw;
-    background-color: #efefef;
-    font-family: "IBM Plex Sans Condensed";
     display: grid;
     grid-template-areas: 
     'seealso'
     'image stats attacks';
     grid-template-columns: 32vw 24vw 28vw;
-    scroll-margin-top: 3.5vw;
 }
 .SeeAlso {
     grid-area: "Seealso";

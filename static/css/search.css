@@ -1,0 +1,25 @@
+.searchitems {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin-left: 2vw;
+}
+.carditem {
+    border-width: 20vw;
+    background-color: white;
+    padding-bottom: 1vw;
+    width: 17vw;
+    text-align: center;
+    margin-bottom: 1vw;
+    border-radius: 10%;
+}
+.cardart {
+    width: 13vw;
+    height: 13vw;
+    padding-top: 1vw;
+    padding-bottom: 0.5vw;
+}
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+}
