@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 import sqlite3
 import logging
-import math
 
 
 app = Flask(__name__)
@@ -86,7 +85,7 @@ def search_redirect():
 @app.route('/Search/<string:category>/<string:query>')
 def search(category, query):
     #initialise sql and cursor
-    conn =  sqlite3.connect('card.db')
+    conn = sqlite3.connect('card.db')
     cur = conn.cursor()
 
     Header = ""
@@ -114,7 +113,37 @@ def search(category, query):
     #PAGE STATICS
     Title = "Card Search"
     stylesheet = "search.css"
-    return render_template('search.html', Header = Header, Title = Title, stylesheet = stylesheet, Cards = Cards, category = category)
+    return render_template('search.html', Header = Header, title = Title, stylesheet = stylesheet, Cards = Cards, category = category)
+
+
+@app.route('/Rules')
+def rulebook():
+
+    #PAGE STATICS
+    Header = "Rulebook"
+    Title = "Rulebook"
+    stylesheet = "Rules.css"
+    return render_template('rules.html', title = Title, Header = Header, stylesheet = stylesheet)
+
+
+@app.route('/About')
+def about():
+
+    #PAGE STATICS
+    Header = "About HCTCG"
+    Title = "About HCTCG"
+    stylesheet = "About.css"
+    return render_template('about.html', title = Title, Header = Header, stylesheet = stylesheet)
+
+
+@app.route('/Changes')
+def changes():
+
+    #PAGE STATICS
+    Header = "Card Changes"
+    Title = "Card Changes"
+    stylesheet = "Changes.css"
+    return render_template('changes.html', title = Title, Header = Header, stylesheet = stylesheet)
 
 
 @app.route('/beemovie') #thinking bee

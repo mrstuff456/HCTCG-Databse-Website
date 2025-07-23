@@ -57,6 +57,7 @@ body {
     width: 13vw;
     height: 10vw;
     grid-area: image;
+    background-color: #010304;
 }
 .navbarbuttons a {
     color: white;

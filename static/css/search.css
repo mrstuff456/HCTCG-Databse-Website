@@ -1,7 +1,8 @@
 .searchitems {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    margin-left: 2vw;
+    margin-left: 1vw;
+    margin-right: 1vw
 }
 .carditem {
     border-width: 20vw;
@@ -11,15 +12,21 @@
     text-align: center;
     margin-bottom: 1vw;
     border-radius: 10%;
+    font-size: 1vw;
 }
 .cardart {
     width: 13vw;
     height: 13vw;
     padding-top: 1vw;
-    padding-bottom: 0.5vw;
+    padding-bottom: 1.3vw;
 }
 a {
     text-decoration: none;
     color: black;
     font-weight: 400;
+}
+.cardart:hover {
+    width: 14vw;
+    height: 14vw;
+    padding-bottom: 0vw;
 }
