@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
 import logging
+import math
 
 
 app = Flask(__name__)
@@ -64,10 +65,41 @@ def hermit_page(name, rarity):
             A2Worded.append("Any") #add "any" if not an X (a wild)
             A2Cost += 4
 
+    #Query the database for any rulings asociated with the card.
+    cur.execute(f"SELECT * FROM CardRuling WHERE CardID = {id}")
+    Rulings = cur.fetchall()
+    if not Rulings:
+        Rulings = ["", "", "", ""]
+
     #Generate the Ratings of the cards
     #Generate using the CAV method (Cost Accounted Value)
     CAV = 9 * ((Health - 200 + A1Damage + A2Damage) / ((A1Cost + 10) * (A2Cost + 40))) + 0.1
     CAV = round(CAV, 2)
+
+
+    #generate data on clashes with other cards
+
+    #query the database for clashes in which the hermit wins.
+    cur.execute(f"SELECT * FROM CardClash WHERE WinnerID = {id}")
+    clashwin = cur.fetchall()
+    clashwinfixed = []
+    #"fix" the data so that it is formatted with the loser's name, and reason
+    for i in clashwin:
+        cur.execute(f"SELECT Name, Rarity, CardType FROM Card WHERE ID = {i[1]}")
+        loser = cur.fetchall()
+        clashwinfixed += [[loser[0][0], loser[0][1], loser[0][2], i[2]]]
+
+    #query the database for clashes in which the hermit loses
+    cur.execute(f"SELECT * FROM CardClash WHERE LoserID = {id}")
+    clashlose = cur.fetchall()
+    clashlosefixed = []
+    #"Fix" the data in above format
+    for i in clashlose:
+        cur.execute(f"SELECT Name, Rarity, CardType FROM Card WHERE ID = {i[0]}")
+        winner = cur.fetchall()
+        clashlosefixed += [[winner[0][0], winner[0][1], winner[0][2], i[2]]]
+
+
     
     
     #PAGE STATICS
@@ -75,7 +107,7 @@ def hermit_page(name, rarity):
     title = f"{HeadStats[0][1]} {HeadStats[0][2]} - Details"
     stylesheet = "hermit_details.css"
 
-    return render_template('hermit_details.html', HeadStats = HeadStats, HermitStats = HermitStats, SeeAlso = SeeAlso, title = title, Header = Header, stylesheet=stylesheet, A1Worded = A1Worded, A2Worded = A2Worded, CAV = CAV)
+    return render_template('hermit_details.html', HeadStats = HeadStats, HermitStats = HermitStats, SeeAlso = SeeAlso, title = title, Header = Header, stylesheet=stylesheet, A1Worded = A1Worded, A2Worded = A2Worded, CAV = CAV, Rulings = Rulings, clashwinfixed = clashwinfixed, clashlosefixed = clashlosefixed)
 
 @app.route('/Searchbar', methods =['POST'])
 def search_redirect():

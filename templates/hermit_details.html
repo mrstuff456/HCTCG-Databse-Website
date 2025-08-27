@@ -47,4 +47,52 @@
         </div>
     </p>
 </div>
+<div class="Rulings">   
+    <div class="RuleGeneral">
+        {%if Rulings[0][1]%}
+        <h3>General Ruling</h3>
+        <p>{{Rulings[0][1]}}</p>
+        {%endif%}
+    </div>
+    <div class="Rule2v2">
+        {%if Rulings[0][2]%}
+        <h3>2v2 Ruling</h3>
+        <p>{{Rulings[0][2]}}</p>
+        {%endif%}
+    </div>
+    <div class="RuleFFA">
+        {%if Rulings[0][3]%}
+        <h3>FFA Ruling</h3>
+        <p>{{Rulings[0][3]}}</p>
+        {%endif%}
+    </div>
+</div>
+<div class="Clashes">
+    {%if clashwinfixed or clashlosefixed%}
+        <h2 class="ClashTitle">
+            Clashes:
+        </h2>
+        {%if clashwinfixed%}
+            <div class="ClashWin">
+                <h3>
+                    Wins against:
+                </h3>
+                {%for i in clashwinfixed%}
+                <a href="/Card/{{i[2]}}/{{i[0]}}/{{i[1]}}">{{i[0]}} {{i[1]}}</a> - {{i[3]}} <br>
+                {%endfor%}
+            </div>
+        {%endif%}
+
+        {%if clashlosefixed%}
+            <div class="ClashLose">
+                <h3>
+                    Loses against:
+                </h3>
+                {%for i in clashlosefixed%}
+                <a href="/Card/{{i[2]}}/{{i[0]}}/{{i[1]}}">{{i[0]}} {{i[1]}}</a> - {{i[3]}} <br>
+                {%endfor%}
+            </div>
+        {%endif%}
+    {%endif%}
+</div>
 {%endblock%}
