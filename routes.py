@@ -79,7 +79,8 @@ def hermit_page(name, rarity):
 
     # Generate the Ratings of the cards
     # Generate using the CAV method (Cost Accounted Value)
-    CAV = 9 * ((Health - 200 + A1Damage + A2Damage) / ((A1Cost + 10) * (A2Cost + 40))) + 0.1
+    CAV = 9 * ((Health - 200 + A1Damage + A2Damage) /
+               ((A1Cost + 10) * (A2Cost + 40))) + 0.1
     CAV = round(CAV, 2)
 
     # generate data on clashes with other cards
