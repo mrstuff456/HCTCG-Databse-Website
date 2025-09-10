@@ -135,7 +135,7 @@ def search(category, query):
     Header = ""
 
     if category in ["ID", "Rarity", "CardType", "Series"]:
-        cur.execute(f"""SELECT Name, Rarity, Art, CardType FROM Card WHERE
+        cur.execute(f"""SELECT Name, Rarity, Snake, CardType FROM Card WHERE
                      {category} = '{query}' ORDER BY Name ASC""")
         Cards = cur.fetchall()
         Header = f"{query} Cards"
@@ -143,12 +143,12 @@ def search(category, query):
         NameFormatted = "%"
         for i in query:
             NameFormatted += f"{i}%"
-        cur.execute(f"""SELECT Name, Rarity, Art, CardType FROM Card WHERE
+        cur.execute(f"""SELECT Name, Rarity, Snake, CardType FROM Card WHERE
                      Name LIKE '{NameFormatted}'""")
         Cards = cur.fetchall()
         Header = f"Cards matching '{query}'"
     if category in ["Type", "OwnerName"]:
-        cur.execute(f"""SELECT Name, Rarity, Art, CardType FROM Card WHERE ID
+        cur.execute(f"""SELECT Name, Rarity, Snake, CardType FROM Card WHERE ID
                      IN (SELECT ID FROM Hermit WHERE
                      {category} = '{query}')""")
         Cards = cur.fetchall()
