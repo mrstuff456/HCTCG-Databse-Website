@@ -3,47 +3,28 @@
 
 <div class="SeeAlso">
     {%for card in SeeAlso%}
-    <a href="/Card/Hermit/{{card[1]}}/{{card[2]}}">{{card[1]}} {{card[2]}},</a>
+    <a href="/Card/Effect/{{card[1]}}/{{card[2]}}">{{card[1]}} {{card[2]}},</a>
     {%endfor%}
 </div>
-<img src="/static/images/cards/hermit/{{HeadStats[0][5]}}/{{HeadStats[0][2]}}.png" alt="Card Art" class="ArtImage">
+<img src="/static/images/cards/effect/{{HeadStats[0][5]}}/{{HeadStats[0][2]}}.png" alt="Card Art" class="ArtImage">
 <div class="Stats">
     <h2>Stats:</h2>
     <p>
-        Health: {{HermitStats[0][3]}} <br>
-        Type: <a href="/Search/Type/{{HermitStats[0][1]}}">{{HermitStats[0][1]}}</a> <br>
-        Owner: <a href="/Search/OwnerName/{{HermitStats[0][2]}}">{{HermitStats[0][2]}}</a> <br>
-        Ratings:  CAV {{CAV}}<br>
+        Type: <a href="/Search/EffectType/{{EffectStats[0][1]}}">{{EffectStats[0][1]}}</a> <br>
         Series: <a href="/Search/Series/{{HeadStats[0][4]}}">{{HeadStats[0][4]}}</a> <br>
     </p>
 </div>
-<div class="Attacks">
-    <h2>Attacks:</h2>
-    <p>
-        <div class="AttackTitle">{{HermitStats[0][5]}}</div>
-        Damage: {{HermitStats[0][6]}} <br>
-        Cost: {{HermitStats[0][4]}}  (
-        {%for i in A1Worded%}
-        {{i}}, 
-        {%endfor%}) <br>
-        <div class="AttackText">
-            {%if HermitStats[0][7]%}
-            {{HermitStats[0][7]}}
-            {%endif%}
-        </div>
-
-        <div class="AttackTitle">{{HermitStats[0][9]}}</div>
-        Damage: {{HermitStats[0][10]}} <br>
-        Cost: {{HermitStats[0][8]}}  (
-        {%for i in A2Worded%}
-        {{i}}, 
-        {%endfor%}) <br>
-        <div class="AttackText">
-            {%if HermitStats[0][11]%}
-            {{HermitStats[0][11]}}
-            {%endif%}
-        </div>
-    </p>
+<div class="Effect">
+    <h2 class="EffectTitle">
+        Effect:
+    </h2>
+    <i>
+        {{EffectStats[0][2]}}
+    </i>
+        {%if Rulings[0][1]%}
+        <h3>General Ruling</h3>
+        <p>{{Rulings[0][1]}}</p>
+        {%endif%}
 </div>
 <div class="Rulings">   
     <div class="RuleGeneral">

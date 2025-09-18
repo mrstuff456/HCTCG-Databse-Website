@@ -17,7 +17,7 @@ main {
 .header-container {
     padding-left: 15vw;
     display: grid;
-    grid-template-columns: 45vw 40vw;
+    grid-template-columns: 60vw 25vw;
     position: fixed;
     font-family: 'IBM Plex Sans';
     grid-template-areas: "title search";
@@ -36,8 +36,8 @@ body {
 }
 .searchbar {
     text-align: right;
-    padding-top: 1.5%;
-    padding-right: 4%;
+    padding-top: 3%;
+    padding-right: 5%;
     grid-area: search;    
 }
 .navbar {

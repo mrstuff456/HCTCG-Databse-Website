@@ -1,0 +1,32 @@
+.quickoptions {
+    display: grid;
+    grid-template-areas: 
+    "hermits effects rulebook about";
+    grid-template-columns: repeat(4, 14vw);
+}
+.optionimg {
+    width: 12vw;
+    padding-left: 1vw;
+}
+.optiontext {
+    text-align: center;
+}
+.optionhermits {
+    grid-area: "hermits";
+}
+.optioneffects {
+    grid-area: "effects";
+}
+.optionrules {
+    grid-area: "rulebook";
+}
+.optionabout {
+    grid-area: "about";
+}
+.quickoptions a {
+    text-decoration: none;
+    color: black;
+}
+.quickoptions a:hover {
+    text-decoration: underline;
+}

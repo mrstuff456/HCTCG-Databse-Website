@@ -1,0 +1,89 @@
+main {
+    display: grid;
+    grid-template-areas: 
+    'seealso . .'
+    'image stats Effect'
+    'ruling . .'
+    'clashes . .';
+    grid-template-columns: 32vw 24vw 28vw;
+}
+.SeeAlso {
+    grid-area: "Seealso";
+    font-size: 1.05vw;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+.ArtImage{
+    grid-area: "image";
+    padding-left: 3vw;
+    padding-top: 1vw;
+    width: 20vw;
+    height: 20vw;
+}
+.Stats {
+    grid-area: "stats";
+    text-wrap: "wrap";
+    background-color: #37A8AC;
+    padding: 0% 0.5vw;
+    border-style: solid;
+    border-color: #37A8AC;
+    border-radius: 10%;
+    margin-right: 8vw;
+}
+.Effect {
+    grid-area: "Effect";
+    text-wrap: wrap;
+    margin-right: 9vw;
+    background-color: #75A16F;
+    padding: 0% 0.5vw;
+    border-style: solid;
+    border-color: #75A16F;
+    border-radius: 10%;
+}
+.EffectTitle {
+    font-weight: bold;
+    padding-bottom: 0.2vw;
+}
+.EffectText {
+    font-style: italic;
+    padding-bottom:0.5vw;
+    padding-top: 0.3vw;
+}
+.Rulings {
+    grid-column: 1 / 3;
+    padding-top: 2vw;
+    display: grid;
+    grid-template-areas: 
+    "RuleGeneral Rule2v2 RuleFFA";
+    grid-template-columns: repeat(3, 27vw);
+}
+.RuleGeneral {
+    grid-area: "RuleGeneral";
+    padding-right: 3vw;
+}
+.Rule2v2 {
+    grid-area: "Rule2v2";
+    padding-right: 3vw;
+}
+.RuleFFA {
+    grid-area: "RuleFFA"
+}
+.Clashes {
+    grid-area: "clashes";
+    grid-column: 1 / 3;
+    padding-top: 2vw;
+    display: grid;
+    grid-template-areas: 
+    "title title"
+    "clashwin clashlose";
+    grid-template-columns: repeat(2, 30vw);
+}
+.ClashTitle {
+    grid-area: title;
+}
+.ClashWin {
+    grid-area: "clashwin";
+}
+.ClashLose {
+    grid-area: "clashlose";
+}

@@ -1,4 +1,35 @@
 {%extends "layout.html"%}
 {%block content%}
-
+<h2>
+    Welcome to the HCTCG Database!
+</h2> 
+<p>
+    What can we help you with today?
+</p>
+<div class="quickoptions">
+    <a class="optionhermits" href="/Search/CardType/Hermit">
+        <img class="optionimg" src="/static/images/cards/Hermit/bdubs/Rare.png">
+        <h3 class="optiontext">
+            Hermit Cards
+        </h3>
+    </a>
+    <a class="optioneffects" href="/Search/CardType/Effect">
+        <img class="optionimg" src="/static/images/cards/Effect/chorus_fruit/Common.png">
+        <h3 class="optiontext">
+            Effect Cards
+        </h3>
+    </a>
+    <a class="optionrules" href="/Rules">
+        <img class="optionimg" src="/static/images/cards/Effect/book/Common.png">
+        <h3 class="optiontext">
+            RuleBook
+        </h3>
+    </a>
+    <a class="optionabout" href="/About">
+        <img class="optionimg" src="/static/images/cards/Effect/command_block/Rare.png">
+        <h3 class="optiontext">
+            About the Database
+        </h3>
+    </a>
+</div>
 {%endblock%}

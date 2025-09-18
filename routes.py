@@ -14,10 +14,10 @@ def home():
     # PAGE STATICS
     Header = "HCTCG Database"
     Title = "Home - HCTCG Database"
-    Stylesheet = "hermit_details.css"
+    stylesheet = "home.css"
 
     return render_template('home.html', Header=Header, Title=Title,
-                           Stylesheet=Stylesheet)
+                           stylesheet=stylesheet)
 
 
 @app.route('/Card/Hermit/<name>/<rarity>')  # Hermit stats page
@@ -56,20 +56,23 @@ def hermit_page(name, rarity):
             # add the type of the hermit to the list
             A1Worded.append(HermitStats[0][1])
             A1Cost += 5
-        else:
-            # add "any" if not an X (a wild)
+        elif i == "O":
+            # add "any" (a wild)
             A1Worded.append("Any")
             A1Cost += 4
-
+        elif i == "N/A":
+            A1Worded.append("No Items Rqeuired")
     for i in HermitStats[0][8]:
         if i == "X":
             # add the type of the hermit to the list
             A2Worded.append(HermitStats[0][1])
             A2Cost += 5
-        else:
-            # add "any" if not an X (a wild)
+        elif i == "O":
+            # add "any" (a wild)
             A2Worded.append("Any")
             A2Cost += 4
+        elif i == "N/A":
+            A2Worded.append("No Items Rqeuired")
 
     # Query the database for any rulings asociated with the card.
     cur.execute(f"SELECT * FROM CardRuling WHERE CardID = {id}")
@@ -120,6 +123,62 @@ def hermit_page(name, rarity):
                            clashlosefixed=clashlosefixed)
 
 
+@app.route('/Card/Effect/<name>/<rarity>') # Effect stats page
+def effect_page(name, rarity):
+    conn = sqlite3.connect('card.db')
+    cur = conn.cursor()
+
+    # query the database to get the "head" stats
+    cur.execute(f"SELECT * FROM Card WHERE Name = '{name}' AND Rarity = '{rarity}'")
+    HeadStats = cur.fetchall()
+    # extract the id from the headstats
+    id = HeadStats[0][0]
+
+    # query the database to fine the effect stats of the card with the relevenat id
+    cur.execute(f"SELECT * FROM Effect WHERE ID = {id}")
+    EffectStats = cur.fetchall()
+
+    # Query the database for any rulings asociated with the card.
+    cur.execute(f"SELECT * FROM CardRuling WHERE CardID = {id}")
+    Rulings = cur.fetchall()
+    if not Rulings:
+        Rulings = ["", "", "", ""]
+
+    # generate data on clashes with other cards
+    # query the database for clashes in which the card wins.
+    cur.execute(f"SELECT * FROM CardClash WHERE WinnerID = {id}")
+    clashwin = cur.fetchall()
+    clashwinfixed = []
+    # "fix" the data so that it is formatted with the loser's name, and reason
+    for i in clashwin:
+        cur.execute(f"""SELECT Name, Rarity, CardType FROM Card WHERE
+                     ID = {i[1]}""")
+        loser = cur.fetchall()
+        clashwinfixed += [[loser[0][0], loser[0][1], loser[0][2], i[2]]]
+
+    # query the database for clashes in which the card loses
+    cur.execute(f"SELECT * FROM CardClash WHERE LoserID = {id}")
+    clashlose = cur.fetchall()
+    clashlosefixed = []
+    # "Fix" the data in above format
+    for i in clashlose:
+        cur.execute(f"""SELECT Name, Rarity, CardType FROM Card WHERE
+                     ID = {i[0]}""")
+        winner = cur.fetchall()
+        clashlosefixed += [[winner[0][0], winner[0][1], winner[0][2], i[2]]]
+
+    # PAGE STATICS
+    Header = f"#{id} {HeadStats[0][1]} - {HeadStats[0][2]}"
+    title = f"{HeadStats[0][1]} {HeadStats[0][2]} - Details"
+    stylesheet = "effect_details.css"
+
+    return render_template('effect_details.html', HeadStats=HeadStats,
+                            EffectStats=EffectStats, Rulings=Rulings,
+                            Header=Header, title=title,
+                            stylesheet=stylesheet, clashwinfixed=clashwinfixed,
+                            clashlosefixed=clashlosefixed)
+
+
 @app.route('/Searchbar', methods=['POST'])
 def search_redirect():
     search = request.form.get('query')
@@ -156,6 +215,11 @@ def search(category, query):
             Header = f"{query}'s Cards"
         else:
             Header = f"{query} Cards"
+    if category == "EffectType":
+        cur.execute(f"""SELECT Name, Rarity, Snake, CardType FROM Card WHERE ID
+                     IN (SELECT ID FROM Effect WHERE
+                     {category} = '{query}')""")
+        Cards = cur.fetchall()
 
     # PAGE STATICS
     Title = "Card Search"
